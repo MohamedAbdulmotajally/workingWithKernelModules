@@ -1,0 +1,23 @@
+#include <linux/module.h>   // Needed for all modules
+#include <linux/kernel.h>   // Needed for KERN_INFO
+#include <linux/init.h>     // Needed for the macros
+
+MODULE_LICENSE("GPL");              // License type -- affects available functionality
+MODULE_AUTHOR("Mohamed Elsayed");         // The author -- visible when you use modinfo
+MODULE_DESCRIPTION("A simple Hello World Kernel Module");  // The description -- modinfo
+
+// Initialization function: called when the module is loaded
+static int __init hello_init(void)
+{
+    printk(KERN_INFO "Hello, World! Kernel module loaded.\n");
+    return 0; // Non-zero return means that the module couldn't be loaded.
+}
+
+// Cleanup function: called when the module is removed
+static void __exit hello_exit(void)
+{
+    printk(KERN_INFO "Goodbye, World! Kernel module unloaded.\n");
+}
+
+module_init(hello_init);  // Register the initialization function
+module_exit(hello_exit);  // Register the cleanup function
